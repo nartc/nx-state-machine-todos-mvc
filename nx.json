@@ -10,5 +10,35 @@
     "tslint.json": "*",
     "nx.json": "*"
   },
-  "projects": {}
+  "projects": {
+    "machine": {
+      "tags": []
+    },
+    "todos": {
+      "tags": []
+    },
+    "todos-e2e": {
+      "tags": [],
+      "implicitDependencies": ["todos"]
+    },
+    "todos-react": {
+      "tags": []
+    },
+    "todos-react-e2e": {
+      "tags": [],
+      "implicitDependencies": ["todos-react"]
+    },
+    "data": {
+      "tags": []
+    },
+    "ng-todos": {
+      "tags": []
+    },
+    "react-todos": {
+      "tags": []
+    },
+    "ng-common": {
+      "tags": []
+    }
+  }
 }

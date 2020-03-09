@@ -1,7 +1,391 @@
 {
   "version": 1,
-  "projects": {},
+  "projects": {
+    "machine": {
+      "root": "libs/machine",
+      "sourceRoot": "libs/machine/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/machine/tsconfig.lib.json",
+              "libs/machine/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/machine/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/machine/jest.config.js",
+            "tsConfig": "libs/machine/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "todos": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "apps/todos",
+      "sourceRoot": "apps/todos/src",
+      "prefix": "nx-state-machine",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/todos",
+            "index": "apps/todos/src/index.html",
+            "main": "apps/todos/src/main.ts",
+            "polyfills": "apps/todos/src/polyfills.ts",
+            "tsConfig": "apps/todos/tsconfig.app.json",
+            "aot": true,
+            "assets": ["apps/todos/src/favicon.ico", "apps/todos/src/assets"],
+            "styles": [
+              "apps/todos/src/styles.css",
+              "node_modules/todomvc-app-css/index.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/todos/src/environments/environment.ts",
+                  "with": "apps/todos/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "todos:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "todos:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "todos:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/todos/tsconfig.app.json",
+              "apps/todos/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/todos/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/todos/jest.config.js",
+            "tsConfig": "apps/todos/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "apps/todos/src/test-setup.ts"
+          }
+        }
+      }
+    },
+    "todos-e2e": {
+      "root": "apps/todos-e2e",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "apps/todos-e2e/protractor.conf.js",
+            "devServerTarget": "todos:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "todos:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "apps/todos-e2e/tsconfig.e2e.json",
+            "exclude": ["**/node_modules/**", "!apps/todos-e2e/**"]
+          }
+        }
+      }
+    },
+    "todos-react": {
+      "root": "apps/todos-react",
+      "sourceRoot": "apps/todos-react/src",
+      "projectType": "application",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/web:build",
+          "options": {
+            "outputPath": "dist/apps/todos-react",
+            "index": "apps/todos-react/src/index.html",
+            "main": "apps/todos-react/src/main.tsx",
+            "polyfills": "apps/todos-react/src/polyfills.ts",
+            "tsConfig": "apps/todos-react/tsconfig.app.json",
+            "assets": [
+              "apps/todos-react/src/favicon.ico",
+              "apps/todos-react/src/assets"
+            ],
+            "styles": [
+              "apps/todos-react/src/styles.css",
+              "node_modules/todomvc-app-css/index.css"
+            ],
+            "scripts": [],
+            "webpackConfig": "@nrwl/react/plugins/webpack"
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/todos-react/src/environments/environment.ts",
+                  "with": "apps/todos-react/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/web:dev-server",
+          "options": {
+            "buildTarget": "todos-react:build"
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "todos-react:build:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/todos-react/tsconfig.app.json",
+              "apps/todos-react/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/todos-react/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/todos-react/jest.config.js",
+            "tsConfig": "apps/todos-react/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "todos-react-e2e": {
+      "root": "apps/todos-react-e2e",
+      "sourceRoot": "apps/todos-react-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/todos-react-e2e/cypress.json",
+            "tsConfig": "apps/todos-react-e2e/tsconfig.e2e.json",
+            "devServerTarget": "todos-react:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "todos-react:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["apps/todos-react-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/todos-react-e2e/**"]
+          }
+        }
+      }
+    },
+    "data": {
+      "root": "libs/data",
+      "sourceRoot": "libs/data/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/data/tsconfig.lib.json",
+              "libs/data/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/data/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/data/jest.config.js",
+            "tsConfig": "libs/data/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "ng-todos": {
+      "projectType": "library",
+      "root": "libs/ng-todos",
+      "sourceRoot": "libs/ng-todos/src",
+      "prefix": "nx-state-machine",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/ng-todos/tsconfig.lib.json",
+              "libs/ng-todos/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/ng-todos/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/ng-todos/jest.config.js",
+            "tsConfig": "libs/ng-todos/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/ng-todos/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {}
+    },
+    "react-todos": {
+      "root": "libs/react-todos",
+      "sourceRoot": "libs/react-todos/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/react-todos/tsconfig.lib.json",
+              "libs/react-todos/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/react-todos/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/react-todos/jest.config.js",
+            "tsConfig": "libs/react-todos/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "ng-common": {
+      "projectType": "library",
+      "root": "libs/ng-common",
+      "sourceRoot": "libs/ng-common/src",
+      "prefix": "nx-state-machine",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/ng-common/tsconfig.lib.json",
+              "libs/ng-common/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/ng-common/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/ng-common/jest.config.js",
+            "tsConfig": "libs/ng-common/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/ng-common/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {}
+    }
+  },
   "cli": {
-    "defaultCollection": "@nrwl/workspace"
-  }
+    "defaultCollection": "@nrwl/angular"
+  },
+  "schematics": {
+    "@nrwl/angular:application": {
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "protractor"
+    },
+    "@nrwl/angular:library": {
+      "unitTestRunner": "jest"
+    },
+    "@nrwl/react": {
+      "application": {
+        "style": "css",
+        "linter": "tslint",
+        "babel": true
+      },
+      "component": {
+        "style": "css"
+      },
+      "library": {
+        "style": "css",
+        "linter": "tslint"
+      }
+    }
+  },
+  "defaultProject": "todos-react"
 }

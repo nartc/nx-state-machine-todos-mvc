@@ -1,0 +1,57 @@
+<section class="todoapp" *ngIf="vm$ | async as vm">
+  <header class="header">
+    <h1>todos</h1>
+    <input
+      #todoInput
+      type="text"
+      class="new-todo"
+      placeholder="What needs to be done?"
+      [value]="vm.context.newTodo"
+      (keyup.enter)="onNewTodoEntered()"
+      (change)="onNewTodoChanged($any($event.target).value)"
+    />
+  </header>
+  <section class="main">
+    <input
+      type="checkbox"
+      class="toggle-all"
+      id="toggle-all"
+      [checked]="vm.isAllCompleted"
+      (change)="onToggleAll(vm.currentMarkEvent)"
+    />
+    <label for="toggle-all" [title]="'Mark all as ' + vm.currentMark"> Mark all as {{ vm.currentMark }} </label>
+    <ul class="todo-list">
+      <nx-state-machine-todo
+        *ngFor="let todo of vm.filteredTodos; trackBy: todosTrackByFn"
+        [todoRef]="todo.ref"
+      ></nx-state-machine-todo>
+    </ul>
+  </section>
+  <ng-container *ngIf="!!vm.context.todos.length">
+    <footer class="footer">
+      <span class="todo-count">
+        <strong>{{ vm.activeTodoCount }}</strong> item{{ vm.activeTodoCount === 1 ? '' : 's' }}
+        left
+      </span>
+      <ul class="filters">
+        <li>
+          <a [routerLink]="['']" [ngClass]="{ selected: vm.isMatchAll }">All</a>
+        </li>
+        <li>
+          <a [routerLink]="['', 'active']" [ngClass]="{ selected: vm.isMatchActive }">Active</a>
+        </li>
+        <li>
+          <a [routerLink]="['', 'completed']" [ngClass]="{ selected: vm.isMatchCompleted }">Completed</a>
+        </li>
+      </ul>
+      <button
+        class="clear-completed"
+        (click)="onClearCompletedClicked()"
+        type="button"
+        *ngIf="vm.activeTodoCount < vm.context.todos.length"
+      >
+        Clear Completed
+      </button>
+    </footer>
+  </ng-container>
+</section>

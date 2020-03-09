@@ -1,0 +1,23 @@
+<li *ngIf="vm$ | async as vm" [ngClass]="{ completed: vm?.context.completed, editing: vm?.isMatchEditing }">
+  <div class="view">
+    <input
+      type="checkbox"
+      class="toggle"
+      (change)="onToggled()"
+      [checked]="vm?.context.completed"
+      [value]="vm?.context.completed"
+    />
+    <label (dblclick)="onLabelDoubleClicked()">{{ vm?.context.title }}</label>
+    <button class="destroy" (click)="onDestroyClicked()"></button>
+  </div>
+  <input
+    #editInput
+    type="text"
+    class="edit"
+    [value]="vm?.context.title"
+    (blur)="onEditBlurred()"
+    (change)="onEditChanged(editInput.value)"
+    (keyup.enter)="onEditEntered()"
+    (keyup.escape)="onEditEscaped()"
+  />
+</li>
