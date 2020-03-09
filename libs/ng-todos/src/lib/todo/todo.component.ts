@@ -8,9 +8,10 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { TodoContext, TodoWithRef } from '@nx-state-machine/machine';
+import { TodoContext, TodoEvent, TodoStateSchema, TodoWithRef } from '@nx-state-machine/machine';
 import { combineLatest, Observable, Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
+import { State } from 'xstate';
 import { TodoMachineService } from '../services/todo-machine.service';
 
 interface TodoVm {
@@ -18,7 +19,8 @@ interface TodoVm {
   isMatchEditing: boolean;
 }
 
-function toVm([context, isMatchEditing]: [TodoContext, boolean]): TodoVm {
+function toVm([state, context]: [State<TodoContext, TodoEvent, TodoStateSchema>, TodoContext]): TodoVm {
+  const isMatchEditing = state.matches('editing');
   return { context, isMatchEditing };
 }
 
@@ -48,9 +50,7 @@ export class TodoComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this._todoMachineService.interpret(this.todoRef);
-    this.vm$ = combineLatest([this._todoMachineService.stateContext$, this._todoMachineService.isMatchEditing$]).pipe(
-      map(toVm),
-    );
+    this.vm$ = combineLatest([this._todoMachineService.state$, this._todoMachineService.stateContext$]).pipe(map(toVm));
 
     this._todoMachineService.state$.pipe(takeUntil(this.destroy$)).subscribe(state => {
       if (state.changed !== false && state.matches('editing')) {

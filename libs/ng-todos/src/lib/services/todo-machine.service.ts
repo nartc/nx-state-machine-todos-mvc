@@ -35,8 +35,4 @@ export class TodoMachineService {
   get stateContext$(): Observable<TodoContext> {
     return this.state$.pipe(pluck('context'));
   }
-
-  get isMatchEditing$(): Observable<boolean> {
-    return this.state$.pipe(map(state => state.matches('editing')));
-  }
 }

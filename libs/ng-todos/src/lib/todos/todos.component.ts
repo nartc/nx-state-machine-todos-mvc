@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { TodosContext, TodosEvent, TodoWithRef } from '@nx-state-machine/machine';
+import { TodosContext, TodosEvent, TodosStateSchema, TodoWithRef } from '@nx-state-machine/machine';
 import { combineLatest, Observable, Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
+import { State } from 'xstate';
 import { TodosMachineService } from '../services/todos-machine.service';
 
 interface TodosVm {
@@ -17,17 +18,22 @@ interface TodosVm {
   filteredTodos: TodoWithRef[];
 }
 
-function toVm([
-  context,
-  isMatchAll,
-  isMatchActive,
-  isMatchCompleted,
-  activeTodoCount,
-  isAllCompleted,
-  currentMark,
-  currentMarkEvent,
-  filteredTodos,
-]: [TodosContext, boolean, boolean, boolean, number, boolean, string, TodosEvent['type'], TodoWithRef[]]): TodosVm {
+function toVm([state, context]: [State<TodosContext, TodosEvent, TodosStateSchema>, TodosContext]): TodosVm {
+  const isMatchAll = state.matches('all');
+  const isMatchActive = state.matches('active');
+  const isMatchCompleted = state.matches('completed');
+  const activeTodoCount = context.todos.filter(todo => !todo.completed).length;
+  const isAllCompleted = context.todos.length > 0 && activeTodoCount === 0;
+  const currentMark = isAllCompleted ? 'active' : 'completed';
+  const currentMarkEvent = `MARK.${currentMark}` as TodosEvent['type'];
+  let filteredTodos = context.todos;
+
+  if (state.matches('active')) {
+    filteredTodos = context.todos.filter(todo => !todo.completed);
+  } else if (state.matches('completed')) {
+    filteredTodos = context.todos.filter(todo => todo.completed);
+  }
+
   return {
     context,
     isMatchAll,
@@ -76,17 +82,9 @@ export class TodosComponent implements OnInit {
         this._todosMachineService.sendEvent(`SHOW.${path}` as TodosEvent['type']);
       });
 
-    this.vm$ = combineLatest([
-      this._todosMachineService.stateContext$,
-      this._todosMachineService.isMatchAll$,
-      this._todosMachineService.isMatchActive$,
-      this._todosMachineService.isMatchCompleted$,
-      this._todosMachineService.activeTodosCount$,
-      this._todosMachineService.isAllCompleted$,
-      this._todosMachineService.currentMark$,
-      this._todosMachineService.currentMarkEvent$,
-      this._todosMachineService.filteredTodos$,
-    ]).pipe(map(toVm));
+    this.vm$ = combineLatest([this._todosMachineService.state$, this._todosMachineService.stateContext$]).pipe(
+      map(toVm),
+    );
   }
 
   onNewTodoEntered() {
