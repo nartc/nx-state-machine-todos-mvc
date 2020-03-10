@@ -7,10 +7,10 @@ This repository implements **TodoMVC** project ([TodoMVC](http://todomvc.com/)) 
 ## Run
 1. Clone this repository
 2. Run `npm install`
-3a. Run Angular app: `npx ng serve todos`
-3b. Run React app: `npx ng serve todos-react`
+3. Run Angular app: `npx ng serve todos`
+4. Run React app: `npx ng serve todos-react`
 (you'd need different ports if you run both at the same time)
-4. Check `localhost:{port}` (default to 4200)
+5. Check `localhost:{port}` (default to 4200)
 
 ## Information
 
