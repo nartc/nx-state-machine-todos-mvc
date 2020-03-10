@@ -62,7 +62,7 @@ export const todosMachine = Machine<TodosContext, TodosStateSchema, TodosEvent>(
   },
   on: {
     'NEWTODO.CHANGE': {
-      actions: assign({ newTodo: (_, event) => event.value.trim() }),
+      actions: assign({ newTodo: (_, event) => event.value }),
     },
     'NEWTODO.COMMIT': {
       actions: [
@@ -70,7 +70,7 @@ export const todosMachine = Machine<TodosContext, TodosStateSchema, TodosEvent>(
           newTodo: '',
           todos: (ctx: TodosContext) => {
             const { newTodo } = ctx;
-            const todo = createTodo(newTodo);
+            const todo = createTodo(newTodo.trim());
             return ctx.todos.concat({
               ...todo,
               ref: spawn<TodoContext, TodoEvent>(todoMachine.withContext({ ...todo, prevTitle: todo.title })),
