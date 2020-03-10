@@ -39,6 +39,9 @@
     },
     "ng-common": {
       "tags": []
+    },
+    "react-common": {
+      "tags": []
     }
   }
 }

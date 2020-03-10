@@ -22,7 +22,8 @@
       "@nx-state-machine/ui-react": ["libs/ui-react/src/index.ts"],
       "@nx-state-machine/ng-todos": ["libs/ng-todos/src/index.ts"],
       "@nx-state-machine/react-todos": ["libs/react-todos/src/index.ts"],
-      "@nx-state-machine/ng-common": ["libs/ng-common/src/index.ts"]
+      "@nx-state-machine/ng-common": ["libs/ng-common/src/index.ts"],
+      "@nx-state-machine/react-common": ["libs/react-common/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

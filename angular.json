@@ -10,10 +10,7 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "libs/machine/tsconfig.lib.json",
-              "libs/machine/tsconfig.spec.json"
-            ],
+            "tsConfig": ["libs/machine/tsconfig.lib.json", "libs/machine/tsconfig.spec.json"],
             "exclude": ["**/node_modules/**", "!libs/machine/**"]
           }
         },
@@ -44,10 +41,7 @@
             "tsConfig": "apps/todos/tsconfig.app.json",
             "aot": true,
             "assets": ["apps/todos/src/favicon.ico", "apps/todos/src/assets"],
-            "styles": [
-              "apps/todos/src/styles.css",
-              "node_modules/todomvc-app-css/index.css"
-            ],
+            "styles": ["apps/todos/src/styles.css", "node_modules/todomvc-app-css/index.css"],
             "scripts": []
           },
           "configurations": {
@@ -101,10 +95,7 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "apps/todos/tsconfig.app.json",
-              "apps/todos/tsconfig.spec.json"
-            ],
+            "tsConfig": ["apps/todos/tsconfig.app.json", "apps/todos/tsconfig.spec.json"],
             "exclude": ["**/node_modules/**", "!apps/todos/**"]
           }
         },
@@ -158,14 +149,8 @@
             "main": "apps/todos-react/src/main.tsx",
             "polyfills": "apps/todos-react/src/polyfills.ts",
             "tsConfig": "apps/todos-react/tsconfig.app.json",
-            "assets": [
-              "apps/todos-react/src/favicon.ico",
-              "apps/todos-react/src/assets"
-            ],
-            "styles": [
-              "apps/todos-react/src/styles.css",
-              "node_modules/todomvc-app-css/index.css"
-            ],
+            "assets": ["apps/todos-react/src/favicon.ico", "apps/todos-react/src/assets"],
+            "styles": ["apps/todos-react/src/styles.css", "node_modules/todomvc-app-css/index.css"],
             "scripts": [],
             "webpackConfig": "@nrwl/react/plugins/webpack"
           },
@@ -208,10 +193,7 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "apps/todos-react/tsconfig.app.json",
-              "apps/todos-react/tsconfig.spec.json"
-            ],
+            "tsConfig": ["apps/todos-react/tsconfig.app.json", "apps/todos-react/tsconfig.spec.json"],
             "exclude": ["**/node_modules/**", "!apps/todos-react/**"]
           }
         },
@@ -261,10 +243,7 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "libs/data/tsconfig.lib.json",
-              "libs/data/tsconfig.spec.json"
-            ],
+            "tsConfig": ["libs/data/tsconfig.lib.json", "libs/data/tsconfig.spec.json"],
             "exclude": ["**/node_modules/**", "!libs/data/**"]
           }
         },
@@ -287,10 +266,7 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "libs/ng-todos/tsconfig.lib.json",
-              "libs/ng-todos/tsconfig.spec.json"
-            ],
+            "tsConfig": ["libs/ng-todos/tsconfig.lib.json", "libs/ng-todos/tsconfig.spec.json"],
             "exclude": ["**/node_modules/**", "!libs/ng-todos/**"]
           }
         },
@@ -315,10 +291,7 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "libs/react-todos/tsconfig.lib.json",
-              "libs/react-todos/tsconfig.spec.json"
-            ],
+            "tsConfig": ["libs/react-todos/tsconfig.lib.json", "libs/react-todos/tsconfig.spec.json"],
             "exclude": ["**/node_modules/**", "!libs/react-todos/**"]
           }
         },
@@ -341,10 +314,7 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "libs/ng-common/tsconfig.lib.json",
-              "libs/ng-common/tsconfig.spec.json"
-            ],
+            "tsConfig": ["libs/ng-common/tsconfig.lib.json", "libs/ng-common/tsconfig.spec.json"],
             "exclude": ["**/node_modules/**", "!libs/ng-common/**"]
           }
         },
@@ -359,6 +329,29 @@
         }
       },
       "schematics": {}
+    },
+    "react-common": {
+      "root": "libs/react-common",
+      "sourceRoot": "libs/react-common/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["libs/react-common/tsconfig.lib.json", "libs/react-common/tsconfig.spec.json"],
+            "exclude": ["**/node_modules/**", "!libs/react-common/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/react-common/jest.config.js",
+            "tsConfig": "libs/react-common/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   },
   "cli": {
