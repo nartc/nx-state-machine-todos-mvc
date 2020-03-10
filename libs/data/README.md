@@ -2,6 +2,18 @@
 
 This library was generated with [Nx](https://nx.dev).
 
-## Running unit tests
+`data` contains a single class `Todo` to be reused throughout the workspace
 
-Run `ng test data` to execute the unit tests via [Jest](https://jestjs.io).
+```typescript
+export class Todo {
+  title: string;
+  completed: boolean;
+  id: number;
+
+  constructor(title: string) {
+    this.title = title;
+    this.completed = false;
+    this.id = Date.now();
+  }
+}
+```
