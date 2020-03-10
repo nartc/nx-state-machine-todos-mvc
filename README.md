@@ -28,12 +28,12 @@ On the React side, this project uses `React Hooks` and `@xstate/react` to wire u
 
 ## Other README
 
-[Data](./libs/data)
-[Machine](./libs/machine)
-[Angular Common](./libs/ng-common)
-[Angular Todos](./libs/ng-todos)
-[React Common](./libs/react-common)
-[React Todos](./libs/react-todos)
+- [Data](./libs/data)
+- [Machine](./libs/machine)
+- [Angular Common](./libs/ng-common)
+- [Angular Todos](./libs/ng-todos)
+- [React Common](./libs/react-common)
+- [React Todos](./libs/react-todos)
 
 ## Thank you for checking out the repo
  
